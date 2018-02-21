@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <schema xmlns="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.corporation.com/web"
-        xmlns:web="http://www.corporation.com/web">
+        targetNamespace="http://xml-xsd/web"
+        xmlns:web="http://www.xml-xsd/web">
 
     <element name="web-app">
         <complexType>
