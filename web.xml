@@ -2,8 +2,8 @@
 
 <web:web-app id="WebApp_9" version="a24"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:web="http://www.corporation.com/web"
-             xsi:schemaLocation="http://www.corporation.com/web web.xsd">
+             xmlns:web="http://xml-xsd/web"
+             xsi:schemaLocation="http://xml-xsd/web web.xsd">
 
     <display-name>Servlet 2.4 application</display-name>
 
