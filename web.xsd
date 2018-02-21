@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.corporation.com/web"
+        xmlns:web="http://www.corporation.com/web">
+
+    <element name="web-app">
+        <complexType>
+            <choice minOccurs="0" maxOccurs="unbounded">
+                <element name="display-name" type="string"/>
+                <element name="welcome-file-list" type="web:welcomeFileList"/>
+                <element name="filter" type="web:filter"/>
+                <element name="filter-mapping" type="web:filterMapping"/>
+                <element name="listener" type="web:listener"/>
+                <element name="servlet" type="web:servlet"/>
+                <element name="servlet-mapping" type="web:servletMapping"/>
+                <element name="error-page" type="web:errorPage"/>
+            </choice>
+            <attribute name="id" type="ID"/>
+            <attribute name="version" type="string"/>
+        </complexType>
+    </element>
+
+    <complexType name="welcomeFileList">
+        <sequence>
+            <element name="welcome-file" type="string"
+                     maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="filter">
+        <sequence>
+            <element name="filter-name" type="string"/>
+            <element name="filter-class" type="string"/>
+            <element name="init-param" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="param-name" type="string"/>
+                        <element name="param-value" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="filterMapping">
+        <sequence>
+            <element name="filter-name" type="string"/>
+            <element name="url-pattern" type="string"/>
+            <element name="dispatcher" type="web:dispatcher"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="dispatcher">
+        <restriction base="string">
+            <pattern value="[A-Z]+"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="listener">
+        <sequence>
+            <element name="listener-class" type="string"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="servlet">
+        <sequence>
+            <element name="servlet-name" type="string"/>
+            <element name="servlet-class" type="string"/>
+            <element name="init-param" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="param-name" type="string"/>
+                        <element name="param-value" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="servletMapping">
+        <sequence>
+            <element name="servlet-name" type="string"/>
+            <element name="url-pattern" type="string"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="errorPage">
+        <sequence>
+            <choice minOccurs="0" maxOccurs="1">
+                <element name="exception-type" type="web:exceptionType"/>
+                <element name="error-code" type="web:errorCode"/>
+            </choice>
+            <element name="location" type="web:location"/>
+        </sequence>
+    </complexType>
+    
+    <simpleType name="exceptionType">
+        <restriction base="string">
+            <pattern value="([a-zA-Z_$][a-zA-Z\d_$]*\.)*[a-zA-Z_$][a-zA-Z\d_$]*"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="errorCode">
+        <restriction base="nonNegativeInteger">
+            <minInclusive value="100"/>
+            <maxInclusive value="599"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="location">
+        <restriction base="string">
+            <pattern value="/.*"/>
+        </restriction>
+    </simpleType>
+
+</schema>
