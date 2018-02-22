@@ -16,14 +16,14 @@
                 <element name="servlet-mapping" type="web:servletMapping"/>
                 <element name="error-page" type="web:errorPage"/>
             </choice>
-            <attribute name="id" type="ID"/>
-            <attribute name="version" type="string"/>
+            <attribute name="id" type="ID" use="required"/>
+            <attribute name="version" type="string" use="required"/>
         </complexType>
     </element>
 
     <complexType name="welcomeFileList">
         <sequence>
-            <element name="welcome-file" type="string"
+            <element name="welcome-file" type="web:pageType"
                      maxOccurs="unbounded"/>
         </sequence>
     </complexType>
@@ -46,10 +46,16 @@
     <complexType name="filterMapping">
         <sequence>
             <element name="filter-name" type="string"/>
-            <element name="url-pattern" type="string"/>
+            <element name="url-pattern" type="web:url"/>
             <element name="dispatcher" type="web:dispatcher"/>
         </sequence>
     </complexType>
+    
+    <simpleType name="url">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9._/*]+"/>
+        </restriction>
+    </simpleType>
 
     <simpleType name="dispatcher">
         <restriction base="string">
@@ -59,14 +65,14 @@
 
     <complexType name="listener">
         <sequence>
-            <element name="listener-class" type="string"/>
+            <element name="listener-class" type="web:package"/>
         </sequence>
     </complexType>
 
     <complexType name="servlet">
         <sequence>
             <element name="servlet-name" type="string"/>
-            <element name="servlet-class" type="string"/>
+            <element name="servlet-class" type="web:package"/>
             <element name="init-param" minOccurs="0" maxOccurs="unbounded">
                 <complexType>
                     <sequence>
@@ -88,14 +94,20 @@
     <complexType name="errorPage">
         <sequence>
             <choice minOccurs="0" maxOccurs="1">
-                <element name="exception-type" type="web:exceptionType"/>
+                <element name="exception-type" type="web:package"/>
                 <element name="error-code" type="web:errorCode"/>
             </choice>
             <element name="location" type="web:location"/>
         </sequence>
     </complexType>
-    
-    <simpleType name="exceptionType">
+
+    <simpleType name="pageType">
+        <restriction base="string">
+            <pattern value="[a-zA-Z0-9]+\.(html|htm|jsp)"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="package">
         <restriction base="string">
             <pattern value="([a-zA-Z_$][a-zA-Z\d_$]*\.)*[a-zA-Z_$][a-zA-Z\d_$]*"/>
         </restriction>
@@ -110,7 +122,7 @@
 
     <simpleType name="location">
         <restriction base="string">
-            <pattern value="/.*"/>
+            <pattern value="/[a-zA-Z0-9]+\.(html|htm|jsp)"/>
         </restriction>
     </simpleType>
 
